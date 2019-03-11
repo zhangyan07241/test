@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // prototype是函数的自带属性，中文叫做原型
+        //   - 默认值就是一个对象
+        //   - 作用：用于保存构造函数中的公用方法值
+        //   - 使用方式：将构造函数中的方法设置给prototype即可
+        //      所有通过当前构造函数创建的对象都可以使用prototype中的方法
+        function CreateObj (name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+        // console.log(CreateObj.prototype);
+        CreateObj.prototype.sayHi = function () {
+            console.log('你好，我的名字是:' + this.name);
+        };
+        var c1 = new CreateObj('jack', 18, '男');
+        var c2 = new CreateObj('rose', 21, '女');
+        /* c1.sayHi(); // 可以使用
+        c2.sayHi(); // 可以使用
+        console.log(c1.sayHi === c2.sayHi); // true，达到了优化的目的 */
+
+        // 说明一下prototype使用的原理：
+        //  1 观察了实例对象，发现内部不具有sayHi方法，但是前面又可以使用
+        console.log(c1, c2);
+        //  2 我们发现实例对象中都具有一个__proto__属性，这个属性不是我们自己设置的
+        //    - 这个属性是new进行实力对象创建时，给对象添加的属性
+        //    - 我们猜想，__proto__属性实际上保存的就是prototype这个对象的值
+        // console.log(c1.__proto__ === CreateObj.prototype); // true
+
+        //  3 小结，重新说明对象属性的访问过程：
+        //    - 对象访问属性时，首先查找自身，如果存在则使用
+        //       - 如果不存在，则查找构造函数的prototype，如果有，就使用。
+
+        c1.sayHi = function () {
+            console.log('这是c1自身设置的sayHi');
+        };
+        // 现在c1和CreateObj.prototype中都具有sayHi
+        //   - 根据访问规则，先查找的是c1自身，直接使用了c1自身的sayHi
+        c1.sayHi();
+
+    </script>
+</body>
+</html>

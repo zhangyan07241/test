@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function CreateObj () {
+            this.name = 'jack';
+        }
+        // 原型中自带属性constructor，这是属性值为构造函数(构造器)
+        // console.log(CreateObj.prototype);
+        /* console.log(CreateObj.prototype.constructor);
+        console.log(CreateObj.prototype.constructor === CreateObj); // true */
+
+        // 注意：constructor属性是用来给实例对象访问使用的
+        // 作用：用来确定实例对象和构造函数之间的关系(明确实例对象可以使用的功能)
+        var c1 = new CreateObj();
+        console.log(c1);
+        console.log(c1.constructor);
+
+        // 示例：数组的类型判断
+        /* var obj = [1, 2, 3];
+        console.log(obj.constructor === Array); // true */
+
+    
+    </script>
+</body>
+</html>

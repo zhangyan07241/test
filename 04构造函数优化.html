@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj = {
+            sayHi : function () {
+                console.log('你好，我的名字是：' + this.name);
+            },
+            sayHehe : function () {
+                console.log('你好，我的名字是：' + this.name);
+            }
+        };
+        function CreateObj (name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            // this.sayHi = sayHi;
+            this.sayHi = obj.sayHi;
+            this.sayHehe = obj.sayHehe;
+        }
+        var c1 = new CreateObj('jack', 18, '男');
+        // console.log(c1);
+        var c2 = new CreateObj('rose', 21, '女');
+        // console.log(c2);
+
+        // 创建对象时，给不同的实例对象设置了sayHi方法
+        //   - 这个方法功能是固定，但是分别拷贝给了不同的对象
+        //     - 导致一个相同的功能创建了多份，是没有意义的
+        // console.log(c1.sayHi === c2.sayHi); // false
+
+        //   - 解决方式：可以将方法的值设置为命名函数
+        /* function sayHi () {
+            console.log('你好，我的名字是：' + this.name);
+        }
+        console.log(c1.sayHi === c2.sayHi); // true */
+
+        // 新的问题：如果构造函数设置了多个方法，就需要多个命名函数来保存
+        //    - 解决方式：可以将这个方法统一保存到一个对象中
+        //    - **obj被放置到构造函数前面的位置了**
+        console.log(c1.sayHi === c2.sayHi);
+        console.log(c1.sayHehe === c2.sayHehe);
+
+        // 小结：为了达到优化的目的，每个构造函数都应当配套一个对象，用于保存所有的方法值。
+    </script>
+</body>
+</html>
